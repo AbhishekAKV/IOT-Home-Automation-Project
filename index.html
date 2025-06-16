@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tech Projects</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        if (typeof tailwind !== 'undefined') {
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            'mono': ['JetBrains Mono', 'monospace'],
+                            'sans': ['Inter', 'sans-serif']
+                        },
+                        colors: {
+                            'nordic-dark': '#1a1d23',
+                            'nordic-darker': '#14171c',
+                            'nordic-blue': '#2d3748',
+                            'nordic-light': '#4a5568',
+                            'nordic-cyan': '#00d4aa',
+                            'nordic-green': '#48bb78',
+                            'nordic-orange': '#ed8936'
+                        },
+                        animation: {
+                            'float': 'float 6s ease-in-out infinite',
+                            'glow': 'glow 2s ease-in-out infinite alternate',
+                            'fadeIn': 'fadeIn 0.5s ease-in-out',
+                            'slideUp': 'slideUp 0.6s ease-out'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(0, 212, 170, 0.3); }
+            to { box-shadow: 0 0 30px rgba(0, 212, 170, 0.6); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, #1a1d23 0%, #2d3748 50%, #1a1d23 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .circuit-pattern {
+            background-image: 
+                radial-gradient(circle at 20px 20px, rgba(0, 212, 170, 0.1) 1px, transparent 1px),
+                radial-gradient(circle at 60px 60px, rgba(72, 187, 120, 0.1) 1px, transparent 1px);
+            background-size: 80px 80px;
+        }
+        .tech-card {
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .page-content {
+            display: none;
+        }
+        .page-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-nordic-darker text-gray-100 font-sans overflow-x-hidden">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-nordic-dark/90 backdrop-blur-md border-b border-gray-700 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-xl font-mono font-bold text-nordic-cyan">
+                        &lt;/TechProjects Computer Networks&gt;
+                    </h1>
+                </div>
+                <div class="flex space-x-8">
+                    <button onclick="showPage('home')" class="nav-btn relative px-4 py-2 rounded-lg bg-nordic-dark/10 backdrop-blur-sm border border-nordic-cyan/10 text-gray-300 hover:text-nordic-cyan transition-all duration-300 font-medium active group overflow-hidden">
+                        <span class="relative z-10">Home</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-nordic-cyan/0 via-nordic-cyan/10 to-nordic-cyan/0 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg"></div>
+                        <div class="absolute inset-0 bg-gradient-to-br from-nordic-cyan/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg"></div>
+                        <div class="absolute inset-0 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg"></div>
+                    </button>
+                    <button onclick="showPage('topology')" class="nav-btn relative px-4 py-2 rounded-lg bg-nordic-dark/10 backdrop-blur-sm border border-nordic-cyan/10 text-gray-300 hover:text-nordic-cyan transition-all duration-300 font-medium group overflow-hidden">
+                        <span class="relative z-10">Topology</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-nordic-cyan/0 via-nordic-cyan/10 to-nordic-cyan/0 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg"></div>
+                        <div class="absolute inset-0 bg-gradient-to-br from-nordic-cyan/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg"></div>
+                        <div class="absolute inset-0 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg"></div>
+                    </button>
+                    <button onclick="showPage('routing')" class="nav-btn relative px-4 py-2 rounded-lg bg-nordic-dark/10 backdrop-blur-sm border border-nordic-cyan/10 text-gray-300 hover:text-nordic-cyan transition-all duration-300 font-medium group overflow-hidden">
+                        <span class="relative z-10">Routing</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-nordic-cyan/0 via-nordic-cyan/10 to-nordic-cyan/0 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg"></div>
+                        <div class="absolute inset-0 bg-gradient-to-br from-nordic-cyan/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg"></div>
+                        <div class="absolute inset-0 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg"></div>
+                    </button>
+                    <button onclick="showPage('iot')" class="nav-btn relative px-4 py-2 rounded-lg bg-nordic-dark/10 backdrop-blur-sm border border-nordic-cyan/10 text-gray-300 hover:text-nordic-cyan transition-all duration-300 font-medium group overflow-hidden">
+                        <span class="relative z-10">IoT Automation</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-nordic-cyan/0 via-nordic-cyan/10 to-nordic-cyan/0 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg"></div>
+                        <div class="absolute inset-0 bg-gradient-to-br from-nordic-cyan/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg"></div>
+                        <div class="absolute inset-0 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg"></div>
+                    </button>
+                    <button onclick="showPage('pkt-files')" class="nav-btn relative px-4 py-2 rounded-lg bg-nordic-dark/10 backdrop-blur-sm border border-nordic-cyan/10 text-gray-300 hover:text-nordic-cyan transition-all duration-300 font-medium group overflow-hidden">
+                        <span class="relative z-10">.pkt Files</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-nordic-cyan/0 via-nordic-cyan/10 to-nordic-cyan/0 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg"></div>
+                        <div class="absolute inset-0 bg-gradient-to-br from-nordic-cyan/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg"></div>
+                        <div class="absolute inset-0 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page-content active">
+        <!-- Hero Section -->
+        <section class="hero-bg circuit-pattern min-h-screen flex items-center justify-center relative pt-16">
+            <!-- Floating Elements -->
+            <div class="absolute top-20 left-10 w-4 h-4 bg-nordic-cyan rounded-full animate-float opacity-60"></div>
+            <div class="absolute top-40 right-20 w-6 h-6 bg-nordic-green rounded-full animate-float animation-delay-1000 opacity-40"></div>
+            <div class="absolute bottom-40 left-20 w-3 h-3 bg-nordic-orange rounded-full animate-float animation-delay-2000 opacity-50"></div>
+            
+            <div class="text-center max-w-4xl mx-auto px-4">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-slideUp">
+                    CN <span class="text-nordic-cyan">Tech</span> Projects
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-12 animate-slideUp animation-delay-300 font-mono">
+                    Exploring network topologies, routing protocols, and IoT automation
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+                    <!-- Category Cards -->
+                    <div onclick="showPage('topology')" class="tech-card bg-nordic-dark/50 p-8 rounded-xl hover:scale-105 transition-all duration-300 animate-slideUp animation-delay-500 cursor-pointer">
+                        <div class="text-4xl mb-4 text-nordic-cyan">🌐</div>
+                        <h3 class="text-2xl font-semibold mb-4">Topology Projects</h3>
+                        <p class="text-gray-400">Network infrastructure designs and simulation labs</p>
+                    </div>
+                    <div onclick="showPage('routing')" class="tech-card bg-nordic-dark/50 p-8 rounded-xl hover:scale-105 transition-all duration-300 animate-slideUp animation-delay-700 cursor-pointer">
+                        <div class="text-4xl mb-4 text-nordic-green">🛣️</div>
+                        <h3 class="text-2xl font-semibold mb-4">Routing Projects</h3>
+                        <p class="text-gray-400">Advanced routing protocols and path optimization</p>
+                    </div>
+                    <div onclick="showPage('iot')" class="tech-card bg-nordic-dark/50 p-8 rounded-xl hover:scale-105 transition-all duration-300 animate-slideUp animation-delay-900 cursor-pointer">
+                        <div class="text-4xl mb-4 text-nordic-orange">🏠</div>
+                        <h3 class="text-2xl font-semibold mb-4">IoT Automation</h3>
+                        <p class="text-gray-400">Smart home automation and IoT device integration</p>
+                    </div>
+                </div>
+
+                <div class="mt-16 text-gray-300 text-sm leading-relaxed max-w-4xl mx-auto animate-slideUp animation-delay-1000">
+                    <p>The <strong class="text-teal-400">Computer Networks course</strong> offered a solid foundation in networking concepts through hands-on projects in <span class="text-teal-300">Cisco Packet Tracer</span>. Students designed various <strong class="text-teal-500">network topologies</strong> (star, mesh, hybrid) and implemented <span class="text-teal-400">routing protocols</span> like static routing to understand data flow across networks. A key highlight was the <strong class="text-teal-300">IoT Home Automation project</strong>, where wireless routers, IoT devices, and servers were integrated using <span class="text-teal-500">DHCP and static IPs</span> to simulate a functional smart home. These projects reinforced theoretical knowledge while emphasizing practical skills in design, routing, and network security.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Topology Page -->
+    <div id="topology" class="page-content">
+        <section class="min-h-screen bg-nordic-darker pt-24 pb-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <button onclick="goBack()" class="mb-8 flex items-center text-gray-400 hover:text-nordic-cyan transition-colors duration-300">
+                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    Back
+                </button>
+                <div class="text-center mb-16">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                        Network <span class="text-nordic-cyan">Topology</span> Projects
+                    </h1>
+                    <p class="text-xl text-gray-400 font-mono">A project was completed on Cisco Packet Tracer to simulate and analyze various network topologies—including star, ring, bus, tree, and mesh—to understand their structure, communication flow, and practical applications in real-world networking.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project Cards -->
+                    <div class="tech-card bg-nordic-dark p-6 rounded-xl hover:shadow-2xl transition-all duration-300 group">
+                        <div class="text-3xl mb-4 text-nordic-cyan group-hover:animate-bounce">🖧</div>
+                        <h3 class="text-xl font-semibold mb-3">A.M.NAKUL (AM.EN.U4ECE22001)</h3>
+                        <p class="text-gray-400 mb-6">Topology Simulation in Cisco Packet Tracer</p>
+                        <button onclick="downloadFile('NAKUL-CN ASSIGNMENT-1.pdf')" class="w-full bg-nordic-cyan hover:bg-cyan-400 text-nordic-dark font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:animate-pulse">
+                            📁 Download .pdf File
+                        </button>
+                    </div>
+
+                    <div class="tech-card bg-nordic-dark p-6 rounded-xl hover:shadow-2xl transition-all duration-300 group">
+                        <div class="text-3xl mb-4 text-nordic-green group-hover:animate-bounce">🏢</div>
+                        <h3 class="text-xl font-semibold mb-3">ABHIJITH K (AM.EN.U4ECE22004)</h3>
+                        <p class="text-gray-400 mb-6">Topology Simulation in Cisco Packet Tracer</p>
+                        <button onclick="downloadFile('22004 assignment-1_merged.pdf')" class="w-full bg-nordic-green hover:bg-green-400 text-nordic-dark font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:animate-pulse">
+                            📁 Download .pdf File
+                        </button>
+                    </div>
+
+                    <div class="tech-card bg-nordic-dark p-6 rounded-xl hover:shadow-2xl transition-all duration-300 group">
+                        <div class="text-3xl mb-4 text-nordic-orange group-hover:animate-bounce">🛡️</div>
+                        <h3 class="text-xl font-semibold mb-3">ABHINAV NAMBIAR (AM.EN.U4ECE22005)</h3>
+                        <p class="text-gray-400 mb-6">Topology Simulation in Cisco Packet Tracer</p>
+                        <button onclick="downloadFile('ECE22005_CNAssignment.pdf')" class="w-full bg-nordic-orange hover:bg-orange-400 text-nordic-dark font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:animate-pulse">
+                            📁 Download .pdf File
+                        </button>
+                    </div>
+
+                    <div class="tech-card bg-nordic-dark p-6 rounded-xl hover:shadow-2xl transition-all duration-300 group">
+                        <div class="text-3xl mb-4 text-nordic-cyan group-hover:animate-bounce">☁️</div>
+                        <h3 class="text-xl font-semibold mb-3">ADITH SH (AM.EN.U4ECE22006)</h3>
+                        <p class="text-gray-400 mb-6">Topology Simulation in Cisco Packet Tracer</p>
+                        <button onclick="downloadFile('ADITH-Assignment.pdf')" class="w-full bg-nordic-cyan hover:bg-cyan-400 text-nordic-dark font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:animate-pulse">
+                            📁 Download .pdf File
+                        </button>
+                    </div>
+
+                    <div class="tech-card bg-nordic-dark p-6 rounded-xl hover:shadow-2xl transition-all duration-300 group">
+                        <div class="text-3xl mb-4 text-nordic-green group-hover:animate-bounce">📡</div>
+                        <h3 class="text-xl font-semibold mb-3">K V ABHISHEK (AM.EN.U4ECE22018)</h3>
+                        <p class="text-gray-400 mb-6">Topology Simulation in Cisco Packet Tracer</p>
+                        <button onclick="downloadFile('Assignment_ECE22018.pdf')" class="w-full bg-nordic-green hover:bg-green-400 text-nordic-dark font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:animate-pulse">
+                            📁 Download .pdf File
+                        </button>
+                    </div>
+
+                    <div class="tech-card bg-nordic-dark p-6 rounded-xl hover:shadow-2xl transition-all duration-300 group">
+                        <div class="text-3xl mb-4 text-nordic-green group-hover:animate-bounce">📡</div>
+                        <h3 class="text-xl font-semibold mb-3">Project .pkt Files</h3>
+                        <p class="text-gray-400 mb-6">Download all network topology simulation files.</p>
+                        <button onclick="showPage('pkt-files')" class="w-full bg-nordic-green hover:bg-green-400 text-nordic-dark font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:animate-pulse">
+                            📁 View All .pkt Files
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Routing Page -->
+    <div id="routing" class="page-content">
+        <section class="min-h-screen bg-nordic-darker pt-24 pb-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <button onclick="goBack()" class="mb-8 flex items-center text-gray-400 hover:text-nordic-cyan transition-colors duration-300">
+                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    Back
+                </button>
+                <div class="text-center mb-16">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                        <span class="text-nordic-green">Routing</span> Simulation Projects
+                    </h1>
+                    <p class="text-xl text-gray-400 font-mono">A project was carried out on Cisco Packet Tracer to create three distinct LAN networks—each configured using Tree, Star, and Ring topologies—interconnected through a single, appropriately chosen router with proper cabling and interface configuration to enable inter-network communication.
+                    </p>
+                </div>
+                
+                <div class="space-y-8">
+                    <!-- Routing Project Sections -->
+                    <div class="tech-card bg-nordic-dark p-8 rounded-xl">
+                        <div class="flex items-start space-x-6">
+                            <div class="text-4xl text-nordic-green">🔀</div>
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-semibold mb-4">A.M.NAKUL (AM.EN.U4ECE22001)</h3>
+                                <p class="text-gray-400 mb-6">Three LANs using Tree, Star, and Ring topologies were connected via a single router in Cisco Packet Tracer.</p>
+                                <div class="flex space-x-4">
+                                    <button onclick="downloadFile('NAKUL-CN ASSIGNMENT-2.pdf')" class="bg-nordic-green hover:bg-green-400 text-nordic-dark font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105">
+                                        📊 Download (.pdf)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-card bg-nordic-dark p-8 rounded-xl">
+                        <div class="flex items-start space-x-6">
+                            <div class="text-4xl text-nordic-cyan">🌐</div>
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-semibold mb-4">ABHIJITH K (AM.EN.U4ECE22004)</h3>
+                                <p class="text-gray-400 mb-6">Three LANs using Tree, Star, and Ring topologies were connected via a single router in Cisco Packet Tracer.</p>
+                                <div class="flex space-x-4">
+                                    <button onclick="downloadFile('22004 assignment-1_merged.pdf')" class="bg-nordic-cyan hover:bg-cyan-400 text-nordic-dark font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105">
+                                        🌍 Download (.pdf)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-card bg-nordic-dark p-8 rounded-xl">
+                        <div class="flex items-start space-x-6">
+                            <div class="text-4xl text-nordic-orange">⚡</div>
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-semibold mb-4">ABHINAV NAMBIAR (AM.EN.U4ECE22005)</h3>
+                                <p class="text-gray-400 mb-6">Three LANs using Tree, Star, and Ring topologies were connected via a single router in Cisco Packet Tracer.</p>
+                                <div class="flex space-x-4">
+                                    <button onclick="downloadFile('ECE22005_CNAssignment.pdf')" class="bg-nordic-orange hover:bg-orange-400 text-nordic-dark font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105">
+                                        ⚙️ Download (.pdf)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-card bg-nordic-dark p-8 rounded-xl">
+                        <div class="flex items-start space-x-6">
+                            <div class="text-4xl text-nordic-green">🔄</div>
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-semibold mb-4">ADITH SH (AM.EN.U4ECE22006)</h3>
+                                <p class="text-gray-400 mb-6">Three LANs using Tree, Star, and Ring topologies were connected via a single router in Cisco Packet Tracer.</p>
+                                <div class="flex space-x-4">
+                                    <button onclick="downloadFile('ADITH-Assignment.pdf')" class="bg-nordic-green hover:bg-green-400 text-nordic-dark font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105">
+                                        🔗 Download (.pdf)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-card bg-nordic-dark p-8 rounded-xl">
+                        <div class="flex items-start space-x-6">
+                            <div class="text-4xl text-nordic-cyan">🛡️</div>
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-semibold mb-4">K V ABHISHEK (AM.EN.U4ECE22018)</h3>
+                                <p class="text-gray-400 mb-6">Three LANs using Tree, Star, and Ring topologies were connected via a single router in Cisco Packet Tracer.</p>
+                                <div class="flex space-x-4">
+                                    <button onclick="downloadFile('Assignment_ECE22018.pdf')" class="bg-nordic-cyan hover:bg-cyan-400 text-nordic-dark font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105">
+                                        📋 Download (.pdf)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- IoT Page -->
+    <div id="iot" class="page-content">
+        <section class="min-h-screen bg-nordic-darker pt-24 pb-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <button onclick="goBack()" class="mb-8 flex items-center text-gray-400 hover:text-nordic-cyan transition-colors duration-300">
+                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    Back
+                </button>
+                <div class="text-center mb-16">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                        <span class="text-nordic-orange">IoT</span> Home Automation using Cisco Packet Tracer
+                    </h1>
+                    <p class="text-xl text-gray-400 font-mono">Smart home integration and automation project</p>
+                </div>
+                
+                <div class="tech-card bg-nordic-dark p-6 rounded-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 group">
+                    <div class="text-4xl mb-4 text-yellow-500 group-hover:animate-pulse">📱</div>
+                    <h3 class="text-xl font-semibold mb-3">Smart Home 🏡</h3>
+                    <p class="text-gray-400 mb-6">This project simulates a smart home automation system using Cisco Packet Tracer.
+                        It integrates IoT devices, wireless networking, and a central server for real-time control.
+                        The design reflects modern home networks with focus on connectivity, automation, and security.</p>
+                    <div class="space-y-3">
+                        <button onclick="downloadFile('CN_Project.pkt')" class="w-full bg-yellow-500 hover:bg-yellow-400 text-nordic-dark font-semibold py-2 px-4 rounded-lg transition-all duration-300">
+                            💡 Simulation (.pkt)
+                        </button>
+                        <button onclick="downloadFile('README.md')" class="w-full bg-gray-600 hover:bg-gray-500 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300">
+                            📋 Setup Guide (.pdf)
+                        </button>
+                        <button onclick="downloadFile('GROUP1_CN_Project.pptx')" class="w-full bg-blue-500 hover:bg-blue-400 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300">
+                            📊 Presentation (.pptx)
+                        </button>
+                        <button onclick="downloadFile('Report.pdf')" class="w-full bg-red-500 hover:bg-red-400 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300">
+                            📑 Report (.pdf)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Project Gallery Section -->
+                <div class="mt-16">
+                    <h2 class="text-3xl font-bold mb-8 text-center text-nordic-cyan">Project Gallery</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- First Image Card -->
+                        <div class="bg-nordic-dark/30 backdrop-blur-sm rounded-xl overflow-hidden border border-nordic-cyan/10 hover:border-nordic-cyan/30 transition-all duration-300 group">
+                            <div class="relative overflow-hidden">
+                                <img src="files/firstpage.png" alt="IoT Project Overview" class="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-nordic-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-3 text-nordic-cyan">Main Cluster</h3>
+                                <p class="text-gray-400">Acts as the backbone of the system, interconnecting the Home Cluster and Internet Cluster via a central router and switch for smooth communication.</p>
+                            </div>
+                        </div>
+
+                        <!-- Second Image Card -->
+                        <div class="bg-nordic-dark/30 backdrop-blur-sm rounded-xl overflow-hidden border border-nordic-cyan/10 hover:border-nordic-cyan/30 transition-all duration-300 group">
+                            <div class="relative overflow-hidden">
+                                <img src="files/secondpage.png" alt="Device Configuration" class="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-nordic-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-3 text-nordic-cyan">Home Cluster</h3>
+                                <p class="text-gray-400">Contains all smart devices like the AC, thermostat, fire sensor, and user systems (PCs, smartphones), all connected wirelessly to a configured router with DHCP/static IPs. These devices interact through a web server for monitoring and control.</p>
+                            </div>
+                        </div>
+
+                        <!-- Third Image Card -->
+                        <div class="bg-nordic-dark/30 backdrop-blur-sm rounded-xl overflow-hidden border border-nordic-cyan/10 hover:border-nordic-cyan/30 transition-all duration-300 group">
+                            <div class="relative overflow-hidden">
+                                <img src="files/thirdpage.png" alt="Automation Setup" class="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-nordic-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-3 text-nordic-cyan">Internet Cluster</h3>
+                                <p class="text-gray-400">Simulates external connectivity, representing access to the wider internet or cloud services, enabling the system to model real-world remote control and access features.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <!-- .pkt Files Page -->
+    <div id="pkt-files" class="page-content">
+        <section class="min-h-screen bg-nordic-darker pt-24 pb-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <button onclick="goBack()" class="mb-8 flex items-center text-gray-400 hover:text-nordic-cyan transition-colors duration-300">
+                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    Back
+                </button>
+                <div class="text-center mb-16">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                        Network <span class="text-nordic-cyan">Topology</span> Files
+                    </h1>
+                    <p class="text-xl text-gray-400 font-mono">Download simulation files for different network topologies</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <button onclick="downloadFile('ECE22018-Star.pkt')" class="pkt-download-btn bg-nordic-dark hover:bg-nordic-blue text-nordic-cyan font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                        ⭐ Star Topology
+                    </button>
+                    <button onclick="downloadFile('ECE22018-Ring.pkt')" class="pkt-download-btn bg-nordic-dark hover:bg-nordic-blue text-nordic-cyan font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                        🔄 Ring Topology
+                    </button>
+                    <button onclick="downloadFile('ECE22018-Bus.pkt')" class="pkt-download-btn bg-nordic-dark hover:bg-nordic-blue text-nordic-cyan font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                        🚌 Bus Topology
+                    </button>
+                    <button onclick="downloadFile('ECE22018-Tree.pkt')" class="pkt-download-btn bg-nordic-dark hover:bg-nordic-blue text-nordic-cyan font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                        🌳 Tree Topology
+                    </button>
+                    <button onclick="downloadFile('ECE22018-Mesh.pkt')" class="pkt-download-btn bg-nordic-dark hover:bg-nordic-blue text-nordic-cyan font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                        🔗 Mesh Topology
+                    </button>
+                    <button onclick="downloadFile('ECE22018-3LAN_Router.pkt')" class="pkt-download-btn bg-nordic-dark hover:bg-nordic-blue text-nordic-cyan font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                        🛜 3 LAN Router
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-nordic-dark border-t border-gray-700 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-center md:text-left mb-6 md:mb-0">
+                    <h3 class="text-xl font-mono font-bold text-nordic-cyan mb-2">&lt;/TechProjects&gt;</h3>
+                    <p class="text-gray-400">Building the future, one network at a time.</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="https://github.com" class="text-gray-400 hover:text-nordic-cyan transition-colors duration-300 flex items-center space-x-2">
+                        <span class="text-2xl">🐙</span>
+                        <span class="font-mono">GitHub</span>
+                    </a>
+                    <a href="mailto:contact@techprojects.dev" class="text-gray-400 hover:text-nordic-green transition-colors duration-300 flex items-center space-x-2">
+                        <span class="text-2xl">📧</span>
+                        <span class="font-mono">Contact</span>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400 font-mono">
+                <p class="mb-4">&copy; 2025 Tech Projects Portfolio. All rights reserved.</p>
+                <div class="mt-6">
+                    <h4 class="text-nordic-cyan mb-4 text-lg">Project Contributors</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                        <div class="bg-nordic-dark/30 backdrop-blur-sm p-3 rounded-lg border border-nordic-cyan/10 hover:border-nordic-cyan/30 transition-all duration-300">
+                            <p class="text-nordic-cyan">A.M.NAKUL</p>
+                            <p class="text-sm text-gray-500">AM.EN.U4ECE22001</p>
+                        </div>
+                        <div class="bg-nordic-dark/30 backdrop-blur-sm p-3 rounded-lg border border-nordic-cyan/10 hover:border-nordic-cyan/30 transition-all duration-300">
+                            <p class="text-nordic-cyan">ABHIJITH K</p>
+                            <p class="text-sm text-gray-500">AM.EN.U4ECE22004</p>
+                        </div>
+                        <div class="bg-nordic-dark/30 backdrop-blur-sm p-3 rounded-lg border border-nordic-cyan/10 hover:border-nordic-cyan/30 transition-all duration-300">
+                            <p class="text-nordic-cyan">ABHINAV NAMBIAR</p>
+                            <p class="text-sm text-gray-500">AM.EN.U4ECE22005</p>
+                        </div>
+                        <div class="bg-nordic-dark/30 backdrop-blur-sm p-3 rounded-lg border border-nordic-cyan/10 hover:border-nordic-cyan/30 transition-all duration-300">
+                            <p class="text-nordic-cyan">ADITH SH</p>
+                            <p class="text-sm text-gray-500">AM.EN.U4ECE22006</p>
+                        </div>
+                        <div class="bg-nordic-dark/30 backdrop-blur-sm p-3 rounded-lg border border-nordic-cyan/10 hover:border-nordic-cyan/30 transition-all duration-300">
+                            <p class="text-nordic-cyan">K.V.ABHISHEK</p>
+                            <p class="text-sm text-gray-500">AM.EN.U4ECE22018</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functionality
+        let pageHistory = ['home']; // Track page history
+
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update navigation buttons
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => {
+                btn.classList.remove('active', 'text-nordic-cyan');
+                btn.classList.add('text-gray-300');
+            });
+            
+            // Highlight active button
+            event.target.classList.add('active', 'text-nordic-cyan');
+            event.target.classList.remove('text-gray-300');
+            
+            // Add to history
+            pageHistory.push(pageId);
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goBack() {
+            if (pageHistory.length > 1) {
+                pageHistory.pop(); // Remove current page
+                const previousPage = pageHistory[pageHistory.length - 1];
+                
+                // Hide all pages
+                const pages = document.querySelectorAll('.page-content');
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Show previous page
+                document.getElementById(previousPage).classList.add('active');
+                
+                // Update navigation buttons
+                const navButtons = document.querySelectorAll('.nav-btn');
+                navButtons.forEach(btn => {
+                    btn.classList.remove('active', 'text-nordic-cyan');
+                    btn.classList.add('text-gray-300');
+                    if (btn.getAttribute('onclick').includes(previousPage)) {
+                        btn.classList.add('active', 'text-nordic-cyan');
+                        btn.classList.remove('text-gray-300');
+                    }
+                });
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                goBack();
+            }
+        });
+
+        // File download functionality
+        function downloadFile(filename) {
+            try {
+                // Create a temporary download link
+                const link = document.createElement('a');
+                // Use relative path from the current directory
+                link.href = `files/${filename}`;
+                link.download = filename;
+                
+                // Append to body, click, and remove
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch (error) {
+                console.error('Error downloading file:', error);
+                alert('Error downloading file. Please try again.');
+            }
+        }
+
+        // Add smooth scrolling and animation delays
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add animation delay classes dynamically
+            const elements = document.querySelectorAll('.animate-slideUp');
+            elements.forEach((el, index) => {
+                if (el.classList.contains('animation-delay-300')) {
+                    el.style.animationDelay = '0.3s';
+                } else if (el.classList.contains('animation-delay-500')) {
+                    el.style.animationDelay = '0.5s';
+                } else if (el.classList.contains('animation-delay-700')) {
+                    el.style.animationDelay = '0.7s';
+                } else if (el.classList.contains('animation-delay-900')) {
+                    el.style.animationDelay = '0.9s';
+                }
+            });
+            
+            // Add floating animation delays
+            const floatingElements = document.querySelectorAll('.animate-float');
+            floatingElements.forEach((el, index) => {
+                if (el.classList.contains('animation-delay-1000')) {
+                    el.style.animationDelay = '1s';
+                } else if (el.classList.contains('animation-delay-2000')) {
+                    el.style.animationDelay = '2s';
+                }
+            });
+        });
+
+        // Add intersection observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-slideUp');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards for scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.tech-card');
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html> 
